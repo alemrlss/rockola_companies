@@ -7,7 +7,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import { useAuth } from "../../auth/AuthProvider";
 import { formatExpirationDate } from "../../utils/formatDate";
 import StarIcon from "@mui/icons-material/Star";
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
@@ -33,6 +32,31 @@ function AppBarComponent({ drawerWidth, handleDrawerToggle }) {
       default:
         return { name: "Unknown", icon: <HelpOutlineIcon />, color: "#808080" }; // Gris por defecto
     }
+  };
+  const getTextColor = () => {
+    if (user.membership.expiration) {
+      const daysUntilExpiration = calculateDaysUntilExpiration(
+        user.membership.expiration
+      );
+      if (daysUntilExpiration <= 10) {
+        return "red";
+      }
+    }
+
+    return "black";
+  };
+
+  const calculateDaysUntilExpiration = (expirationDate) => {
+    const today = new Date();
+    const expiration = new Date(expirationDate);
+    const millisecondsPerDay = 24 * 60 * 60 * 1000; // Milisegundos por día
+
+    // Calcula la diferencia en días y redondea hacia abajo.
+    const daysUntilExpiration = Math.floor(
+      (expiration - today) / millisecondsPerDay
+    );
+
+    return daysUntilExpiration;
   };
 
   return (
@@ -82,6 +106,9 @@ function AppBarComponent({ drawerWidth, handleDrawerToggle }) {
             <Avatar
               sx={{
                 bgcolor: getMembershipType(user.membership.type).color,
+                borderStyle: "solid",
+                borderWidth: "1px",
+                borderColor: getTextColor(),
                 marginRight: "5px",
                 fontWeight: "bold",
               }}
@@ -93,7 +120,7 @@ function AppBarComponent({ drawerWidth, handleDrawerToggle }) {
               sx={{
                 bgcolor: getMembershipType(user.membership.type).color,
                 padding: "10px",
-                color: "black",
+                color: getTextColor(),
                 fontWeight: "bold",
                 borderRadius: "50px",
               }}

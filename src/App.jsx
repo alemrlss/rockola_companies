@@ -14,7 +14,8 @@ import ProtectedRoute from "./components/Routes/ProtectedRoute";
 import { AuthProvider } from "./auth/AuthProvider";
 import { UserProvider } from "./contexts/UserContext";
 import Cancel from "./views/Memberships/Cancel/Cancel";
-import Employees from "./views/Employees/Employees";
+import ListEmployees from "./views/Employees/List/ListEmployees";
+import CreateEmployees from "./views/Employees/Create/CreateEmployees";
 
 function App() {
   return (
@@ -30,7 +31,14 @@ function App() {
             <Route path="/" element={<ProtectedRoute />}>
               <Route element={<Layout />}>
                 <Route path="/dashboard" element={<Dashboard />}></Route>
-                <Route path="/employees" element={<Employees />}></Route>
+                <Route
+                  path="/employees/create"
+                  element={<CreateEmployees />}
+                ></Route>
+                <Route
+                  path="/employees/list"
+                  element={<ListEmployees />}
+                ></Route>
                 <Route path="/subscriptions/get" element={<Stripe />}></Route>
                 <Route
                   path="/subscriptions/cancel"
