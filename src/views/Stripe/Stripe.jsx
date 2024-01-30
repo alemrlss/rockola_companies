@@ -5,6 +5,7 @@ import { jwtDecode } from "jwt-decode";
 import Card from "../../components/Memberships/Card";
 import CheckoutModal from "../../components/Memberships/CheckoutModal";
 import { useUser } from "../../contexts/UserContext";
+import api from "../../api/api";
 
 const stripePromise = loadStripe(
   "pk_test_51M4ShsFeiEj6y242YNiI1u9Kf1HZM4eHjMZYMeHYrTCHwRfSIA3JwC5znJfpmk0EZWlLbsvQ9wXQZbLAdJZsdhUD00dehK0IeW"
@@ -34,13 +35,9 @@ const Stripe = () => {
           if (decodedToken && decodedToken.countryId) {
             const countryId = decodedToken.countryId;
 
-            const response = await fetch(
-              `http://localhost:5000/api/membership/${countryId}`
-            );
-
-            const data = await response.json();
-            setAvailableMemberships(data);
-            console.log(data);
+            const response = await api.get(`/membership/${countryId}`);
+            console.log(response);
+            setAvailableMemberships(response.data);
             setLoading(false);
           } else {
             console.error(
@@ -81,22 +78,16 @@ const Stripe = () => {
 
   const createCheckoutSession = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:5000/api/stripe/create-checkout-session-subscription`,
+      const response = await api.post(
+        "/stripe/create-checkout-session-subscription",
         {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            membershipId: selectedMembership,
-            userId: userId,
-          }),
+          membershipId: selectedMembership,
+          userId,
         }
       );
 
-      const data = await response.json();
-      setSessionId(data.sessionId);
+      console.log(response.data.sessionId);
+      setSessionId(response.data.sessionId);
     } catch (error) {
       console.error("Error al crear la sesión de checkout:", error);
     }
@@ -127,6 +118,7 @@ const Stripe = () => {
     <div className="container mx-auto mt-8 ">
       <h1 className="text-3xl font-bold mb-4">Membresias:</h1>
       <div className="flex flex-wrap">
+        {console.log(availableMemberships)}
         {availableMemberships.map((membership, index) => (
           <div
             key={index}
