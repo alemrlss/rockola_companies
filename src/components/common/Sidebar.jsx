@@ -34,7 +34,7 @@ function Sidebar({ handleDrawerToggle }) {
     {
       id: "owner",
       translationKey: "menu_payments",
-      name: "Owner(Solo para el dueño)",
+      name: "Owner",
       icon: <MonetizationOnIcon />,
       subItems: null,
     },
@@ -43,7 +43,20 @@ function Sidebar({ handleDrawerToggle }) {
       translationKey: "menu_employees",
       name: "Employees",
       icon: <PeopleIcon />,
-      subItems: null,
+      subItems: [
+        {
+          id: "create",
+          translationKey: "menu_create",
+          name: "Create",
+          icon: <SupervisorAccountIcon />,
+        },
+        {
+          id: "list",
+          translationKey: "menu_list",
+          name: "List",
+          icon: <SupervisorAccountIcon />,
+        },
+      ],
     },
     {
       id: "subscriptions",
@@ -68,7 +81,7 @@ function Sidebar({ handleDrawerToggle }) {
   ];
 
   return (
-    <div className="bg-[#555CB3] h-screen flex flex-col">
+    <div className="bg-[#555CB3] overflow-y-auto h-full flex flex-col">
       <div className="flex mx-8 justify-center items-center space-x-2 my-8">
         <h2
           style={{ textShadow: "2px 2px 1px #B45946", color: "white" }}

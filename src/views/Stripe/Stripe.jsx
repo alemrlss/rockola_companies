@@ -124,7 +124,7 @@ const Stripe = () => {
   }
 
   return (
-    <div className="container mx-auto mt-8 bg-[#121212]">
+    <div className="container mx-auto mt-8 ">
       <h1 className="text-3xl font-bold mb-4">Membresias:</h1>
       <div className="flex flex-wrap">
         {availableMemberships.map((membership, index) => (
