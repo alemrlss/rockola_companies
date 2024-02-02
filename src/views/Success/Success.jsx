@@ -11,7 +11,7 @@ function Success() {
     const handleSuccess = async () => {
       try {
         const response = await fetch(
-          "http://localhost:5000/api/stripe/checkout-session-subscription",
+          "https://rockola-backend.onrender.com/api/stripe/checkout-session-subscription",
           {
             method: "POST",
             headers: {
