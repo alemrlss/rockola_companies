@@ -1,16 +1,29 @@
 import { useEffect, useState } from "react";
 import api from "../../../api/api";
+import { jwtDecode } from "jwt-decode";
 
 function ListEmployees() {
   const [employees, setEmployees] = useState([]);
 
   useEffect(() => {
-    const getEmployees = async () => {
-      const response = await api.get("employee/employees/79");
-      setEmployees(response.data.data);
-    };
+    try {
+      const token = localStorage.getItem("token");
+      if (token) {
+        const decodedToken = jwtDecode(token);
+        const getEmployees = async () => {
+          const response = await api.get(
+            `employee/employees/${decodedToken.id}`
+          );
+          setEmployees(response.data.data);
+        };
 
-    getEmployees();
+        getEmployees();
+      } else {
+        console.error("El token no está presente en el LocalStorage");
+      }
+    } catch (error) {
+      console.error("Error al obtener las membresías:", error);
+    }
   }, []);
 
   return (
