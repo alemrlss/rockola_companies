@@ -54,7 +54,8 @@ function CardSubscription({ membership, onClick, setMembership }) {
         <div className="mt-6 space-y-2 flex flex-col">
           <Typography variant="h6" className="mb-4">
             <CheckIcon sx={{ color: "green", marginRight: 2 }} />
-            {getBenefits().sales} Dispositivo de venta
+            {getBenefits().sales}{" "}
+            {getBenefits().sales === "1" ? "Cuenta" : "Cuentas"} para ventas
           </Typography>
           <Typography variant="h6" className="mb-4">
             <CheckIcon sx={{ color: "green", marginRight: 2 }} />
