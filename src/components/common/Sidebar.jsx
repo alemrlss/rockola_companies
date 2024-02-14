@@ -78,6 +78,13 @@ function Sidebar({ handleDrawerToggle }) {
         },
       ],
     },
+    {
+      id: "screens",
+      translationKey: "menu_screens",
+      name: "Screens",
+      icon: <HelpOutlineIcon />,
+      subItems: null,
+    },
   ];
 
   return (

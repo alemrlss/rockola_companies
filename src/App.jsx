@@ -16,6 +16,7 @@ import { UserProvider } from "./contexts/UserContext";
 import Cancel from "./views/Memberships/Cancel/Cancel";
 import ListEmployees from "./views/Employees/List/ListEmployees";
 import CreateEmployees from "./views/Employees/Create/CreateEmployees";
+import Screens from "./views/Screens/Screens";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
             <Route path="/" element={<ProtectedRoute />}>
               <Route element={<Layout />}>
                 <Route path="/dashboard" element={<Dashboard />}></Route>
+                <Route path="/screens" element={<Screens />}></Route>
                 <Route
                   path="/employees/create"
                   element={<CreateEmployees />}
