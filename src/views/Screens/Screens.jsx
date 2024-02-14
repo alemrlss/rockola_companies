@@ -124,7 +124,9 @@ function Screens() {
           {userScreens.map((screen) => (
             <li key={screen.id} className="mb-2 p-4 bg-gray-100 rounded-md">
               <div className="flex items-center justify-between">
-                <p className="text-lg font-semibold">{screen.name}</p>
+                <p className="text-lg font-semibold">
+                  id:{screen.id} - {screen.name}
+                </p>
                 <span className="text-gray-500">{screen.resolution}</span>
               </div>
               <p className="mt-2">{screen.description}</p>
