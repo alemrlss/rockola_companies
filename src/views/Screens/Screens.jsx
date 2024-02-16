@@ -292,7 +292,7 @@ function Screens() {
             label="Nueva Contraseña"
             variant="outlined"
             fullWidth
-            type="password"
+            type="text"
             value={editedPassword}
             onChange={(e) => setEditedPassword(e.target.value)}
             className="mb-2"
