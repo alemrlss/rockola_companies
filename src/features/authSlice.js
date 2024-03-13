@@ -1,12 +1,13 @@
 // authSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import authService from "./authService";
+import authService from "./AuthService.js";
 
 // Función de verificación al cargar la aplicación
 const checkAuthentication = () => {
   const token = localStorage.getItem("token");
   return !!token;
 };
+//s
 
 const checkInitialUser = () => {
   const user = localStorage.getItem("user");
