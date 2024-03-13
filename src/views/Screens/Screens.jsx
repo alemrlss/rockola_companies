@@ -159,9 +159,17 @@ function Screens() {
         setError(
           "Límite de pantallas excedido. No puedes activar más pantallas."
         );
+      } else if (
+        error.response &&
+        error.response.data &&
+        error.response.data.statusCode === 400 &&
+        error.response.data.message === "SCREEN_HAS_PENDING_VIDEOS"
+      ) {
+        // Manejar el caso específico de que la pantalla tenga videos pendientes
+        setError(
+          "No puedes desactivar la pantalla porque tiene videos pendientes."
+        );
       } else {
-        // Manejar otros errores según tus necesidades
-        // Puedes mostrar un mensaje de error genérico o realizar otras acciones
         setError(
           "Error al cambiar el estado de la pantalla. Inténtalo de nuevo más tarde."
         );
@@ -210,6 +218,25 @@ function Screens() {
 
   return (
     <div className="p-4">
+      <h2 className="text-2xl font-bold mt-10">Crear Pantalla</h2>
+      <form className="flex items-center mt-4">
+        <input
+          type="text"
+          placeholder="Nombre de la pantalla"
+          value={screenName}
+          onChange={(e) => setScreenName(e.target.value)}
+          className="border p-2 mb-2"
+        />
+        <button
+          type="button"
+          onClick={handleCreateScreen}
+          className="bg-blue-500 text-white px-4 py-2 rounded"
+        >
+          Crear pantalla
+        </button>
+      </form>
+      {error && <p className="text-red-500 mt-2">{error}</p>}
+
       <div>
         <h2 className="text-2xl font-bold mb-4">Tus Pantallas:</h2>
         <ul className="grid grid-cols-2 gap-4">
@@ -248,26 +275,6 @@ function Screens() {
         </ul>
       </div>
 
-      <h2 className="text-2xl font-bold mt-10">Crear Pantalla</h2>
-      <form className="flex flex-col items-center mt-4">
-        <input
-          type="text"
-          placeholder="Nombre de la pantalla"
-          value={screenName}
-          onChange={(e) => setScreenName(e.target.value)}
-          className="border p-2 mb-2"
-        />
-        <button
-          type="button"
-          onClick={handleCreateScreen}
-          className="bg-blue-500 text-white px-4 py-2 rounded"
-        >
-          Crear pantalla
-        </button>
-
-        {error && <p className="text-red-500 mt-2">{error}</p>}
-      </form>
-
       <Elements stripe={stripePromise}>
         {/* Renderiza tu componente CheckoutModal aquí si lo necesitas */}
       </Elements>
@@ -278,7 +285,7 @@ function Screens() {
         onClose={() => setEditingScreen(null)}
         aria-labelledby="modal-edit-screen"
       >
-        <Box className="p-4 bg-white w-96 mx-auto mt-20">
+        <Box className="p-4 bg-white w-96 mx-auto mt-20 space-y-6">
           <h2 className="text-2xl font-bold mb-4">Editar Pantalla</h2>
           <TextField
             label="Nuevo Nombre"

@@ -1,15 +1,15 @@
 // Login.js
-import  { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import { Link, useNavigate } from 'react-router-dom';
-import { loginCompany } from '../../features/authSlice';
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import { Link, useNavigate } from "react-router-dom";
+import { loginEmployee } from "../../features/authSlice";
 
 function Login() {
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
 
   const dispatch = useDispatch();
@@ -28,11 +28,12 @@ function Login() {
     }
 
     // Disparar la acción de inicio de sesión
-    dispatch(loginCompany(formData))
+    dispatch(loginEmployee(formData))
       .then((result) => {
         // Resultado exitoso del inicio de sesión
         if (result.payload && result.payload.token) {
-          goTo('/dashboard');
+          console.log("first")
+          goTo("/dashboard");
         }
       })
       .catch((error) => {
@@ -48,7 +49,10 @@ function Login() {
 
   return (
     <main className="flex h-screen justify-center items-center bg-gray-200">
-      <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit}>
+      <form
+        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+        onSubmit={handleSubmit}
+      >
         <div className="mb-4">
           <TextField
             id="email"
@@ -80,11 +84,13 @@ function Login() {
       </form>
 
       <div className="bg-gray-500 p-4 rounded-md">
-        <Link to="/login-employee">Go to Employee login</Link>
+        <Link to="/login">Go to Company Login</Link>
       </div>
       <div>
-        {auth.status === 'failed' && (
-          <p className="text-red-500 text-xs italic text-center">{auth.error}</p>
+        {auth.status === "failed" && (
+          <p className="text-red-500 text-xs italic text-center">
+            {auth.error}
+          </p>
         )}
       </div>
     </main>

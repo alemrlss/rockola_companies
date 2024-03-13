@@ -17,6 +17,12 @@ import Cancel from "./views/Memberships/Cancel/Cancel";
 import ListEmployees from "./views/Employees/List/ListEmployees";
 import CreateEmployees from "./views/Employees/Create/CreateEmployees";
 import Screens from "./views/Screens/Screens";
+import Rockobits from "./views/Rockobits/Rockobits";
+import TransferRockobitsForm from "./views/Employees/Transfer/TransferRockobitsForm";
+import LoginEmployee from "./views/LoginEmployee/LoginEmployee";
+import Test from "./views/Test";
+import RockobitsSuccess from "./views/Rockobits/RockobitsSuccess";
+import RockobitsSale from "./views/Rockobits/RockobitsSale";
 
 function App() {
   return (
@@ -28,6 +34,8 @@ function App() {
             <Route path="/" element={<PublicRoute />}>
               <Route index element={<Navigate to="/login" />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/test" element={<Test />} />
+              <Route path="/login-employee" element={<LoginEmployee />} />
             </Route>
             <Route path="/" element={<ProtectedRoute />}>
               <Route element={<Layout />}>
@@ -41,12 +49,22 @@ function App() {
                   path="/employees/list"
                   element={<ListEmployees />}
                 ></Route>
+                <Route
+                  path="/employees/transfer"
+                  element={<TransferRockobitsForm />}
+                ></Route>
                 <Route path="/subscriptions/get" element={<Stripe />}></Route>
                 <Route
                   path="/subscriptions/cancel"
                   element={<Cancel />}
                 ></Route>
                 <Route path="/success" element={<Success />}></Route>
+                <Route path="/rockobits/buy" element={<Rockobits />}></Route>
+                <Route path="/rockobits/sale" element={<RockobitsSale />}></Route>
+                <Route
+                  path="/rockobits/success"
+                  element={<RockobitsSuccess />}
+                ></Route>
                 <Route path="*" element={<div> Page not found</div>} />
               </Route>
             </Route>

@@ -56,6 +56,12 @@ function Sidebar({ handleDrawerToggle }) {
           name: "List",
           icon: <SupervisorAccountIcon />,
         },
+        {
+          id: "transfer",
+          translationKey: "menu_transfer",
+          name: "Transfer",
+          icon: <SupervisorAccountIcon />,
+        },
       ],
     },
     {
@@ -84,6 +90,26 @@ function Sidebar({ handleDrawerToggle }) {
       name: "Screens",
       icon: <HelpOutlineIcon />,
       subItems: null,
+    },
+    {
+      id: "rockobits",
+      translationKey: "menu_rockobits",
+      name: "Rockobits",
+      icon: <HelpOutlineIcon />,
+      subItems: [
+        {
+          id: "buy",
+          translationKey: "menu_buy",
+          name: "Buy",
+          icon: <SupervisorAccountIcon />,
+        },
+        {
+          id: "sale",
+          translationKey: "menu_sale",
+          name: "Sale",
+          icon: <SupervisorAccountIcon />,
+        }
+      ],
     },
   ];
 

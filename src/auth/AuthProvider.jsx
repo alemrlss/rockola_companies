@@ -41,9 +41,9 @@ export function AuthProvider({ children }) {
       email: userData.user.email,
       role: userData.user.type,
       membership: {
-        name: userData.user.membership.name,
-        type: userData.user.membership.type,
-        expiration: userData.user.membership.expiration,
+        name: userData.user.membership?.name,
+        type: userData.user.membership?.type,
+        expiration: userData.user.membership?.expiration,
       },
     };
     setUser(userInfo);
