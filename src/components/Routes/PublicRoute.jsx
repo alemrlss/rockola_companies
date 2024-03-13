@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useAuth } from "../../auth/AuthProvider";
+import { useSelector } from "react-redux";
 export default function PublicRoute() {
-  const { isAuthenticated } = useAuth();
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   if (isAuthenticated) {
     return <Navigate to="/dashboard" />;

@@ -7,16 +7,17 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import { formatExpirationDate } from "../../utils/formatDate";
 import StarIcon from "@mui/icons-material/Star";
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
-import { useUser } from "../../contexts/UserContext";
+import { useSelector } from "react-redux";
+import { formatExpirationDate } from "../../utils/formatDate";
 
 function AppBarComponent({ drawerWidth, handleDrawerToggle }) {
-  const { user } = useUser();
+  const user = useSelector((state) => state.auth.user);
 
+  console.log(user);
   const getMembershipType = (type) => {
     switch (type) {
       case 10:
@@ -33,8 +34,9 @@ function AppBarComponent({ drawerWidth, handleDrawerToggle }) {
         return { name: "Unknown", icon: <HelpOutlineIcon />, color: "#808080" }; // Gris por defecto
     }
   };
+
   const getTextColor = () => {
-    if (user.membership.expiration) {
+    if (user.membership && user.membership.expiration) {
       const daysUntilExpiration = calculateDaysUntilExpiration(
         user.membership.expiration
       );
@@ -93,45 +95,73 @@ function AppBarComponent({ drawerWidth, handleDrawerToggle }) {
             justifyContent: "space-between",
           }}
         >
-          <Box
-            sx={{
-              display: { xs: "none", sm: "flex" },
-              alignItems: "center",
-              backgroundColor: "#f5f5f5",
-              borderRadius: "50px",
-              marginLeft: "20px",
-              color: "black",
-            }}
-          >
-            <Avatar
+          {user.membership && (
+            <Box
               sx={{
-                bgcolor: getMembershipType(user.membership.type).color,
-                borderStyle: "solid",
-                borderWidth: "1px",
-                borderColor: getTextColor(),
-                marginRight: "5px",
-                fontWeight: "bold",
-              }}
-            >
-              {getMembershipType(user.membership.type).icon}
-            </Avatar>
-            <Typography
-              variant="body2"
-              sx={{
-                bgcolor: getMembershipType(user.membership.type).color,
-                padding: "10px",
-                color: getTextColor(),
-                fontWeight: "bold",
+                display: { xs: "none", sm: "flex" },
+                alignItems: "center",
+                backgroundColor: "#f5f5f5",
                 borderRadius: "50px",
+                marginLeft: "20px",
+                color: "black",
               }}
             >
-              {user.membership.expiration
-                ? `Vence el: ${formatExpirationDate(
-                    user.membership.expiration
-                  )}`
-                : "No tienes membresía"}
-            </Typography>
-          </Box>
+              <Avatar
+                sx={{
+                  bgcolor: getMembershipType(user.membership.type).color,
+                  borderStyle: "solid",
+                  borderWidth: "1px",
+                  borderColor: getTextColor(),
+                  marginRight: "5px",
+                  fontWeight: "bold",
+                }}
+              >
+                {getMembershipType(user.membership.type).icon}
+              </Avatar>
+              <Typography
+                variant="body2"
+                sx={{
+                  bgcolor: getMembershipType(user.membership.type).color,
+                  padding: "10px",
+                  color: getTextColor(),
+                  fontWeight: "bold",
+                  borderRadius: "50px",
+                }}
+              >
+                {user.membership.expiration
+                  ? `Vence el: ${formatExpirationDate(
+                      user.membership.expiration
+                    )}`
+                  : "No tienes membresía"}
+              </Typography>
+            </Box>
+          )}
+
+          {/* Balance Section */}
+          {user.balance !== undefined && (
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                backgroundColor: "#f5f5f5",
+                borderRadius: "50px",
+                marginLeft: "20px",
+                color: "black",
+              }}
+            >
+              <Typography
+                variant="body2"
+                sx={{
+                  padding: "10px",
+                  fontWeight: "bold",
+                  borderRadius: "50px",
+                }}
+              >
+                 {user.balance} Rockobits
+              </Typography>
+            </Box>
+          )}
+
           <Box sx={{ display: "flex", alignItems: "center" }}>
             {/* Notificaciones */}
             <IconButton
@@ -152,7 +182,11 @@ function AppBarComponent({ drawerWidth, handleDrawerToggle }) {
                 {user.name}
               </Typography>
               <Typography variant="body2" component="div" color="textSecondary">
-                {user.role === 23 ? "Empresa" : "No Rol"}
+                {user.type === 22
+                  ? "Empleado"
+                  : user.type === 23
+                  ? "Empresa"
+                  : "No Rol"}
               </Typography>
             </Box>
 
