@@ -7,6 +7,7 @@ const checkAuthentication = () => {
   const token = localStorage.getItem("token");
   return !!token;
 };
+//s
 
 const checkInitialUser = () => {
   const user = localStorage.getItem("user");
