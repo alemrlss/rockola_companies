@@ -1,6 +1,6 @@
 // authSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import authService from "./authService.js";
+import authService from "./AuthService.js";
 
 // Función de verificación al cargar la aplicación
 const checkAuthentication = () => {
